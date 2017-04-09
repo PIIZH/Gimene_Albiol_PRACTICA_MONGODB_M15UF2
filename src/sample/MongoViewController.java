@@ -51,7 +51,7 @@ public class MongoViewController implements Initializable {
             MongoClient mongoClient = new MongoClient(HOST, PORT);
             MongoDatabase mongoDatabase = mongoClient.getDatabase("dam");
             collUsers = mongoDatabase.getCollection("usuaris");
-            DB db = mongoClient.getDB("DB");
+            DB db = mongoClient.getDB("dam");
             collectionUpdate = db.getCollection("usuaris");
         } catch (Exception e) {
             System.err.println(e.getClass().getName() +": " + e.getMessage());
@@ -194,8 +194,8 @@ public class MongoViewController implements Initializable {
         String[] finalHobby = hobby.split("[^a-zA-Z0-9-\\s']+");
         doc = new Document("name", name);
 
-        for (String littlHobby:finalHobby){
-            doc.append("hobbies", littlHobby);
+        for (String littleHobby:finalHobby){
+            doc.append("hobbies", littleHobby);
         }
 
         try{
@@ -221,11 +221,17 @@ public class MongoViewController implements Initializable {
     }
 
     private void updateData(String newRow,String oldRow){
-        BasicDBObject oldFile = new BasicDBObject();
-        oldFile.append("name",oldRow);
-        BasicDBObject newFile = new BasicDBObject();
-        newFile.append("$set", newRow);
-        collectionUpdate.findAndModify(oldFile,newFile);
+        DBObject dboOld = new BasicDBObject();
+        dboOld.put("name",oldRow);
+
+        DBObject dboNew = new BasicDBObject();
+        dboNew.put("name",newRow);
+
+        DBObject dboUpdate = new BasicDBObject();
+        dboUpdate.put("$set",dboNew);
+
+        collectionUpdate.update(dboOld, dboUpdate);
+
         lblCheckQuery.setText("Updated value");
         lblCheckQuery.setVisible(true);
     }
