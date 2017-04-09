@@ -54,7 +54,7 @@ public class MongoViewController implements Initializable {
             DB db = mongoClient.getDB("DB");
             collectionUpdate = db.getCollection("usuaris");
         } catch (Exception e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.err.println(e.getClass().getName() +": " + e.getMessage());
         }
     }
 
