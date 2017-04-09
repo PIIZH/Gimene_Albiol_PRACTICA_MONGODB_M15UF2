@@ -1,25 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MongoViewController">
    <children>
       <Pane prefHeight="400.0" prefWidth="600.0">
          <children>
-            <Pane layoutX="464.0" prefHeight="241.0" prefWidth="129.0">
+            <Pane layoutX="464.0" prefHeight="310.0" prefWidth="129.0">
                <children>
-                  <RadioButton fx:id="rbRead" layoutX="10" layoutY="40" mnemonicParsing="false" onAction="#rbReadDataOnClick" text="Read data" selected="true"/>
+                  <RadioButton fx:id="rbRead" layoutX="10" layoutY="40" mnemonicParsing="false" onAction="#rbReadDataOnClick" selected="true" text="Read data" />
                   <RadioButton fx:id="rbEdit" layoutX="10" layoutY="80" mnemonicParsing="false" onAction="#rbEditDataOnClick" text="Edit data" />
                   <RadioButton fx:id="rbDelete" layoutX="10" layoutY="120" mnemonicParsing="false" onAction="#rbDeleteDataOnClick" text="Delete data" />
                   <RadioButton fx:id="rbInsert" layoutX="10" layoutY="160" mnemonicParsing="false" onAction="#rbInsertDataOnClick" text="Insert data" />
-                  <Button fx:id="btnDoIt" alignment="CENTER" layoutX="10" layoutY="200" mnemonicParsing="false" onAction="#btnDoItOnClick" prefHeight="25.0" prefWidth="100.0" text="JUST DO IT" />
+                  <Button fx:id="btnDoIt" alignment="CENTER" layoutX="10.0" layoutY="280.0" mnemonicParsing="false" onAction="#btnDoItOnClick" prefHeight="26.0" prefWidth="112.0" text="Make Action" />
+                  <CheckBox fx:id="chckStatus" layoutX="10.0" layoutY="200" mnemonicParsing="false" onAction="#chckChangeStatus" text="Name" />
+                  <Button layoutX="10.0" layoutY="240.0" mnemonicParsing="false" onAction="#btnClearScreen" prefHeight="26.0" prefWidth="112.0" text="Clear Screen" />
                </children>
             </Pane>
             <Label alignment="CENTER" layoutX="1.0" layoutY="383.0" prefHeight="17.0" prefWidth="600.0" text="This has been creted by Gerard Albiol Cuesta and Miquel Gimenez Homar  © ">
@@ -27,6 +32,10 @@
                   <Font size="10.0" />
                </font>
             </Label>
+            <TextField fx:id="txtfUserInteraction" layoutX="46.0" layoutY="41.0" prefHeight="26.0" prefWidth="413.0" promptText="Read Data" />
+            <TextField fx:id="txtHobbies" layoutX="46.0" layoutY="82.0" prefHeight="26.0" prefWidth="413.0" promptText="Hobbies" visible="false" />
+            <TextArea fx:id="txtaResult" editable="false" layoutX="46.0" layoutY="80.0" prefHeight="241.0" prefWidth="413.0" />
+            <Label fx:id="lblCheckQuery" alignment="CENTER" contentDisplay="CENTER" layoutX="46.0" layoutY="340.0" prefHeight="16.0" prefWidth="413.0" text="Inserted the values!" textFill="#070505" visible="false" />
          </children></Pane>
    </children>
    <columnConstraints>
