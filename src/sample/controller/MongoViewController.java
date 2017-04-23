@@ -1,21 +1,27 @@
-package sample;
+package sample.controller;
 
 import com.mongodb.*;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 import org.bson.Document;
+
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 
 public class MongoViewController implements Initializable {
 
-    private final static String HOST = "localhost";
-    private final static int PORT = 27017;
+    public final static String HOST = "localhost";
+    public final static int PORT = 27017;
     MongoCollection<Document> collUsers;
     DBCollection collectionUpdate;
     Document doc;
@@ -40,13 +46,14 @@ public class MongoViewController implements Initializable {
     @FXML
     Label lblCheckQuery;
 
+
+
     public int currentRadioButton = 0;
     boolean changeTextBoxName = true;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         try {
             MongoClient mongoClient = new MongoClient(HOST, PORT);
             MongoDatabase mongoDatabase = mongoClient.getDatabase("dam");
@@ -145,48 +152,67 @@ public class MongoViewController implements Initializable {
     }
 
 
+
+    @FXML public void  btnCheckHobbiesOnCLick() throws IOException {
+        Stage stage = (Stage) rbDelete.getScene().getWindow();
+        stage.setTitle("MongoDB");
+        stage.setResizable(false);
+        Parent root = FXMLLoader.load(getClass().getResource("../view/hobbyView.fxml"));
+        stage.setScene(new Scene(root, 600, 400));
+        Scene scene = stage.getScene();
+        scene.setRoot(root);
+    }
+
+
+    /**
+     *
+     * CRUD
+     *
+     */
+
+
     private void readData(String check) {
         MongoCursor<Document> mongoCursor;
 
-            switch(chckStatus.getText()){
-                case "Name":
-                    try {
-                        if (check.equals("")) {
-                            mongoCursor = collUsers.find().iterator();
-                        }else {
-                            BasicDBObject search = new BasicDBObject();
-                            search.put("name", check);
-                            mongoCursor = collUsers.find(search).iterator();
-                        }
-                        while (mongoCursor.hasNext()) {
-                            doc = mongoCursor.next();
-                            txtaResult.appendText("Name: " + doc.getString("name") + "\nHobbies: " + doc.get("hobbies")+"\n____________________________\n");
-                        }
-                    }catch (Exception e) {
-                        System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        switch(chckStatus.getText()){
+            case "Name":
+                try {
+                    if (check.equals("")) {
+                        mongoCursor = collUsers.find().iterator();
+                    }else {
+                        BasicDBObject search = new BasicDBObject();
+                        search.put("name", check);
+                        mongoCursor = collUsers.find(search).iterator();
                     }
-
-                    break;
-
-                case "Hobby":
-                    try {
-                        if (check.equals("")) {
-                            mongoCursor = collUsers.find().iterator();
-                        }else {
-                            BasicDBObject search = new BasicDBObject();
-                            search.put("hobbies", check);
-                            mongoCursor = collUsers.find(search).iterator();
-                        }
-                        while (mongoCursor.hasNext()) {
-                            doc = mongoCursor.next();
-                            System.out.println(doc.getString("name"));
-                            txtaResult.appendText("Hobbies: " + doc.get("hobbies")+"\nName:"+doc.getString("name")+"\n____________________________\n");
-                        }
-                    }catch (Exception e) {
-                        System.err.println(e.getClass().getName() + ": " + e.getMessage());
+                    while (mongoCursor.hasNext()) {
+                        doc = mongoCursor.next();
+                        txtaResult.appendText("Name: " + doc.getString("name") + "\nHobbies: " + doc.get("hobbies")+"\n____________________________\n");
                     }
-                    break;
-            }
+                }catch (Exception e) {
+                    System.err.println(e.getClass().getName() + ": " + e.getMessage());
+                }
+
+                break;
+
+            case "Hobby":
+                try {
+                    if (check.equals("")) {
+                        mongoCursor = collUsers.find().iterator();
+                    }else {
+                        BasicDBObject search = new BasicDBObject();
+                        search.put("hobbies", check);
+                        mongoCursor = collUsers.find(search).iterator();
+                    }
+                    while (mongoCursor.hasNext()) {
+                        doc = mongoCursor.next();
+                        System.out.println(doc.getString("name"));
+                        txtaResult.appendText("Hobbies: " + doc.get("hobbies")+"\nName:"+doc.getString("name")+"\n____________________________\n");
+                    }
+                }catch (Exception e) {
+                    System.err.println(e.getClass().getName() + ": " + e.getMessage());
+                }
+                break;
+        }
 
     }
 
@@ -235,6 +261,5 @@ public class MongoViewController implements Initializable {
         lblCheckQuery.setText("Updated value");
         lblCheckQuery.setVisible(true);
     }
-
 }
 
