@@ -71,6 +71,7 @@ public class HobbyViewController implements Initializable{
             alphabetical();
         }
     }
+
     //ArrayList
     public void addToArryList(MongoCursor<Document> mongoCursor){
         try {
